@@ -1,4 +1,4 @@
-pip3 install quandl
+
 import pandas as pd
 import numpy as np
 import quandl
