@@ -1,1 +1,5 @@
 quandl
+matplotlib
+pandas
+keras
+twnsorflow
