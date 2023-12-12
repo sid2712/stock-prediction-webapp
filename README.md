@@ -13,7 +13,7 @@ This web application is designed to predict stock prices using a machine-learnin
 To run this application locally, follow these steps:
 
 1. Clone the repository:
-git clone https://github.com/your-username/stock-price-prediction-app.git
+git clone https://github.com/sid2712/stock-price-prediction-app.git
 
 2. Install dependencies:
 pip install -r requirements.txt
@@ -38,7 +38,7 @@ streamlit run app.py
 
 ## Contributors
 
-- [Siddhant Patel](https://github.com/sidphai)
+- [Siddhant Patel](https://github.com/sid2712)
 
 
 ## License
