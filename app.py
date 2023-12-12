@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 import quandl
+%matplotlib tk
 import matplotlib.pyplot as plt
 
 import streamlit as st
