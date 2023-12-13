@@ -1,5 +1,5 @@
 quandl
-matplotlib
+matplotlib.pyplot
 pandas
 keras
-twnsorflow
+tensorflow
