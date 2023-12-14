@@ -1,5 +1,6 @@
 quandl
 matplotlib
+plotly
 pandas
 keras
 tensorflow
