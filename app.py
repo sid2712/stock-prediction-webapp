@@ -3,9 +3,8 @@ import pandas as pd
 import numpy as np
 import quandl
 import matplotlib.pyplot as plt
-
 import streamlit as st
-
+import plotly.graph_objects as go
 
 st.title('Stock-trend-Predition')
 user_input = st.text_input('Enter stock Ticker','BSE/BOM500325')
@@ -56,18 +55,43 @@ st.subheader('Data from last 10 years')
 st.write(data.describe())
 
 st.subheader('Closing price vs Timechart')
-fig = plt.figure(figsize=(15,8))
-plt.plot(data.Close)
-st.pyplot(fig)
+# Create a Plotly figure for closing prices
+fig = go.Figure()
+
+# Add trace for closing prices
+fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Closing Price'))
+
+# Update layout and display the plot
+fig.update_layout(title='Stock Closing Prices',
+                  xaxis_title='Date',
+                  yaxis_title='Price',
+                  template='plotly_white',
+                 height=600,  # Set the height of the figure
+                  width=1000)  # You can use different templates like 'plotly_dark', 'plotly' etc.
+
+st.plotly_chart(fig)
 
 st.subheader('100 and 200 days Moving average')
-data['100_days_MA'] = data['Close'].rolling(window=100).mean()
-data['200_days_MA'] = data['Close'].rolling(window=200).mean()
-fig = plt.figure(figsize=(15,8))
-plt.plot(data.index, data['Close'], label='Closing Prices')
-plt.plot(data.index, data['100_days_MA'], label='100-day Moving Average', color='red')
-plt.plot(data.index, data['200_days_MA'], label='200-day Moving Average', color='green')
-st.pyplot(fig)
+# Calculate 100 and 200 days moving averages
+data['100_MA'] = data['Close'].rolling(window=100).mean()
+data['200_MA'] = data['Close'].rolling(window=200).mean()
+# Create a Plotly figure for closing prices and moving averages
+fig = go.Figure()
+
+# Add traces for closing prices and moving averages
+fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Closing Price'))
+fig.add_trace(go.Scatter(x=data.index, y=data['100_MA'], mode='lines', name='100 Days Moving Average'))
+fig.add_trace(go.Scatter(x=data.index, y=data['200_MA'], mode='lines', name='200 Days Moving Average'))
+
+# Update layout and display the plot
+fig.update_layout(title='Stock Closing Prices and Moving Averages',
+                  xaxis_title='Date',
+                  yaxis_title='Price',
+                  template='plotly_white',
+                  height=600,  # Set the height of the figure
+                  width=1200)  # Set the width of the figure
+
+st.plotly_chart(fig)
 
 closing_prices = data['Close'].values.reshape(-1, 1)
 
@@ -101,7 +125,7 @@ predicted_stock_prices = scaler.inverse_transform(predicted_stock_prices)
 test_y = scaler.inverse_transform(test_y)
 
 st.subheader('Predicted vs actual prices')
-fig2 = plt.figure(figsize=(15, 6))
+fig2 = plt.figure(figsize=(15, 8))
 plt.plot(data.index[-len(closing_prices):], closing_prices, color='blue', label='Actual Closing Prices')
 plt.plot(data.index[-len(predicted_stock_prices):], predicted_stock_prices, color='red', label='Predicted Closing Prices')
 plt.title('Actual vs. Predicted Stock Closing Prices')
