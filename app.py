@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import quandl
 import matplotlib.pyplot as plt
+
 import streamlit as st
 import plotly.graph_objects as go
 
@@ -59,18 +60,17 @@ st.subheader('Closing price vs Timechart')
 fig = go.Figure()
 
 # Add trace for closing prices
-fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Closing Price'))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], mode='lines', name='Closing Price'))
 
 # Update layout and display the plot
 fig.update_layout(title='Stock Closing Prices',
                   xaxis_title='Date',
                   yaxis_title='Price',
                   template='plotly_white',
+                  xaxis_rangeslider_visible = True,
                  height=600,  # Set the height of the figure
                   width=1000)  # You can use different templates like 'plotly_dark', 'plotly' etc.
-
-st.plotly_chart(fig)
-
+fig.show()
 st.subheader('100 and 200 days Moving average')
 # Calculate 100 and 200 days moving averages
 data['100_MA'] = data['Close'].rolling(window=100).mean()
@@ -79,17 +79,19 @@ data['200_MA'] = data['Close'].rolling(window=200).mean()
 fig = go.Figure()
 
 # Add traces for closing prices and moving averages
-fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Closing Price'))
-fig.add_trace(go.Scatter(x=data.index, y=data['100_MA'], mode='lines', name='100 Days Moving Average'))
-fig.add_trace(go.Scatter(x=data.index, y=data['200_MA'], mode='lines', name='200 Days Moving Average'))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], mode='lines', name='Closing Price'))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['100_MA'], mode='lines', name='100 Days Moving Average'))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['200_MA'], mode='lines', name='200 Days Moving Average'))
 
 # Update layout and display the plot
 fig.update_layout(title='Stock Closing Prices and Moving Averages',
                   xaxis_title='Date',
                   yaxis_title='Price',
                   template='plotly_white',
+                  xaxis_rangeslider_visible = True,
                   height=600,  # Set the height of the figure
                   width=1200)  # Set the width of the figure
+fig.show()
 
 st.plotly_chart(fig)
 
